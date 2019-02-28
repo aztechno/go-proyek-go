@@ -1,0 +1,8 @@
+{{ define "Show" }}
+  {{ template "Header" }}
+    {{ template "Menu"  }}
+        <h2> Author: {{ .Author }} </h2>
+            <p>{{ .Created }} </p>
+            <p>{{ .Body }} </p>
+  {{ template "Footer" }}
+{{ end }}
