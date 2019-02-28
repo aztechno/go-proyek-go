@@ -100,23 +100,6 @@ func Insert(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", 301)
 }
 
-func Update(w http.ResponseWriter, r *http.Request) {
-	db := dbConn()
-	if r.Method == "POST" {
-		Author := r.FormValue("author")
-		Body := r.FormValue("body")
-		Created := r.FormValue("created")
-		Id := r.FormValue("uid")
-		insForm, err := db.Prepare("UPDATE newsbank SET Author=?, Body=? , Created=? WHERE Id=?")
-		if err != nil {
-			panic(err.Error())
-		}
-		insForm.Exec(Author, Body, Created, Id)
-		log.Println("UPDATE: author: " + Author + " | body: " + Body + " | created: " + Created)
-	}
-	defer db.Close()
-	http.Redirect(w, r, "/", 301)
-}
 
 func Delete(w http.ResponseWriter, r *http.Request) {
 	db := dbConn()
@@ -137,7 +120,6 @@ func main() {
 	http.HandleFunc("/show", Show)
 	http.HandleFunc("/new", New)
 	http.HandleFunc("/insert", Insert)
-	http.HandleFunc("/update", Update)
 	http.HandleFunc("/delete", Delete)
 	http.ListenAndServe(":8080", nil)
 }
